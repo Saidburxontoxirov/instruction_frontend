@@ -37,6 +37,11 @@ const routes = [
         path: '/file',
         name: 'File',
         component: lazyload('file')
+      },
+      {
+        path: '/apps',
+        name: 'App',
+        component: lazyload('app')
       }
     ]
   },

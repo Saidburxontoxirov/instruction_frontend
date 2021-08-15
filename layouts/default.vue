@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <template>
       <v-card>
         <v-navigation-drawer
@@ -15,11 +15,12 @@
                 src="https://randomuser.me/api/portraits/men/85.jpg"
               ></v-img>
             </v-list-item-avatar>
-
-            <v-list-item-title>Toxirov Saidburxon</v-list-item-title>
-
+            <v-list-item-content>
+              <v-list-item-title>{{ user.fullname }}</v-list-item-title>
+              <v-list-item-subtitle>{{ user.email }}</v-list-item-subtitle>
+            </v-list-item-content>
             <v-btn icon @click.stop="mini = !mini">
-              <v-icon>mdi-arrow-left</v-icon>
+              <v-icon>mdi-arrow-left-thick</v-icon>
             </v-btn>
           </v-list-item>
 
@@ -60,7 +61,7 @@
     <v-main>
       <router-view></router-view>
     </v-main>
-  </div>
+  </v-container>
 </template>
 <script>
 export default {
@@ -69,15 +70,16 @@ export default {
       drawer: true,
       items: [
         { title: 'Apps', icon: 'mdi-apps', path: '/apps' },
-        { title: 'Users', icon: 'mdi-account-group-outline', path: '/users' },
-        { title: 'Sections', icon: 'mdi-apps-box', path: '/sections' },
-        { title: 'Files', icon: 'mdi-file-document', path: 'files' },
+        { title: 'Users', icon: 'mdi-account-group-outline', path: '/main' },
+        { title: 'Sections', icon: 'mdi-apps-box', path: '/main' },
+        { title: 'Files', icon: 'mdi-file-document', path: '/main' },
         {
           title: 'User-Sections',
           icon: 'mdi-account-star',
-          path: '/user_sections'
+          path: '/main'
         }
       ],
+      user: {},
       mini: true
     }
   },
@@ -87,8 +89,13 @@ export default {
       this.$router.push('/login')
     },
     async fetchUserData() {
-      
+      const response = await this.$store.dispatch('users/fetchUser')
+      this.user = response
+      this.$toast.success('I got a user')
     }
+  },
+  created() {
+    this.fetchUserData()
   }
 }
 </script>

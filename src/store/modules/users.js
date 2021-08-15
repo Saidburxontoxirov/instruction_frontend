@@ -1,29 +1,22 @@
 import axios from '../../axios'
 
-const state = {
-  user: {}
-}
+const state = {}
 
-const mutations = {
-  SET_USER_DATA: (state, data) => {
-    state.user = data
-  }
-}
+const mutations = {}
 
 const actions = {
+  // eslint-disable-next-line no-unused-vars
   async fetchUser({ commit }) {
     try {
       const response = await axios.get('/user')
-      commit('SET_USER_DATA', response.data.data)
+      return Promise.resolve(response.data.data)
     } catch (error) {
       return Promise.reject(error)
     }
   }
 }
 
-const getters = {
-  getUser: (state) => state.user
-}
+const getters = {}
 
 export default {
   namespaced: true,
